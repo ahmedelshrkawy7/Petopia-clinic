@@ -2,6 +2,8 @@ import { useState } from "react"
 import { MenuIcon } from "lucide-react"
 import { cn } from "cn"
 
+import { MaskIcon } from "@/components/mask-icon"
+import { ThemeToggle } from "@/components/theme-toggle"
 import { Button } from "@/components/ui/button"
 import {
   Sheet,
@@ -11,7 +13,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import calendarIcon from "@/assets/icons/calendar.svg"
-import pawPrintIcon from "@/assets/icons/paw-print.svg"
+import petopiaMark from "@/assets/brand/petopia-mark.png"
 import phoneIcon from "@/assets/icons/phone.svg"
 
 type NavLink = { label: string; href: string }
@@ -35,9 +37,7 @@ type NavbarProps = {
 function Brand() {
   return (
     <a href="#home" className="flex items-center gap-2.5">
-      <span className="flex size-[42px] shrink-0 items-center justify-center rounded-full bg-primary">
-        <img src={pawPrintIcon} alt="" className="size-[23px]" />
-      </span>
+      <img src={petopiaMark} alt="" className="h-[42px] w-auto shrink-0" />
       <span className="flex flex-col gap-px leading-normal whitespace-nowrap">
         <span className="text-[19px] text-foreground">Petopia</span>
         <span className="text-[8px] font-semibold text-muted-foreground uppercase">
@@ -91,7 +91,7 @@ export function Navbar({
             href={`tel:${phoneToDigits(phone)}`}
             className="hidden items-center gap-2 sm:flex"
           >
-            <img src={phoneIcon} alt="" className="size-[15px]" />
+            <MaskIcon src={phoneIcon} className="size-[15px] text-primary" />
             <span className="flex flex-col gap-px leading-normal whitespace-nowrap">
               <span className="text-[8px] text-muted-foreground uppercase">
                 Available 24/7
@@ -102,11 +102,13 @@ export function Navbar({
             </span>
           </a>
 
+          <ThemeToggle className="rounded-full" />
+
           <Button
             onClick={onBook}
             className="h-12 gap-[9px] rounded-full px-[22px] text-[13px] font-bold"
           >
-            <img src={calendarIcon} alt="" className="size-4" />
+            <MaskIcon src={calendarIcon} className="size-4" />
             Book
           </Button>
 

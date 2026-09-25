@@ -1,5 +1,6 @@
 import { cn } from "cn"
 
+import { MaskIcon } from "@/components/mask-icon"
 import awardRibbonIcon from "@/assets/icons/award-ribbon.svg"
 import headsetIcon from "@/assets/icons/headset.svg"
 import medicalBagIcon from "@/assets/icons/medical-bag.svg"
@@ -34,20 +35,22 @@ const stats = [
 
 export function StatsSection({ className }: { className?: string }) {
   return (
-    <section id="why-petopia" className={cn("py-16 font-jakarta", className)}>
+    <section id="stats" className={cn("py-16 font-jakarta", className)}>
       <div className="page-container">
-        <dl className="grid gap-6 rounded-[32px] border border-[rgba(201,196,209,0.3)] bg-white p-[33px] shadow-xs sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+        <dl className="grid gap-6 rounded-[32px] border border-border/70 bg-card p-[33px] shadow-xs sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
           {stats.map((stat, i) => (
             <div
               key={stat.label}
               className={cn(
                 "flex items-center gap-4 py-2.5",
-                i > 0 &&
-                  "lg:border-l lg:border-[rgba(201,196,209,0.2)] lg:pl-[33px]"
+                i > 0 && "lg:border-l lg:border-border/60 lg:pl-[33px]"
               )}
             >
-              <span className="flex size-14 shrink-0 items-center justify-center rounded-3xl bg-[#efeafd]">
-                <img src={stat.icon} alt="" className={stat.iconClassName} />
+              <span className="flex size-14 shrink-0 items-center justify-center rounded-3xl bg-brand-soft">
+                <MaskIcon
+                  src={stat.icon}
+                  className={cn("text-primary", stat.iconClassName)}
+                />
               </span>
               <div className="flex flex-col-reverse">
                 <dt className="max-w-[130px] text-sm leading-5 font-medium text-body">

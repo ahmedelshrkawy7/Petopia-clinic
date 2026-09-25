@@ -42,6 +42,9 @@
     --color-card: var(--card);
     --color-foreground: var(--foreground);
     --color-body: var(--body);
+    --color-brand-soft: var(--brand-soft);
+    --color-section: var(--section);
+    --color-glow: var(--glow);
     --color-background: var(--background);
     --radius-sm: calc(var(--radius) * 0.6);
     --radius-md: calc(var(--radius) * 0.8);
@@ -56,10 +59,13 @@
     --background: oklch(1 0 0);
     --foreground: #201e27;
     --body: #4d4957;
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
+    --brand-soft: #efeafd;
+    --section: #faf7fb;
+    --glow: rgba(207, 201, 254, 0.5);
+    --card: #ffffff;
+    --card-foreground: #201e27;
+    --popover: #ffffff;
+    --popover-foreground: #201e27;
     --primary: #55429e;
     --primary-foreground: #ffffff;
     --secondary: oklch(0.97 0 0);
@@ -69,9 +75,9 @@
     --accent: oklch(0.97 0 0);
     --accent-foreground: oklch(0.205 0 0);
     --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.708 0 0);
+    --border: #e5e1e8;
+    --input: #e5e1e8;
+    --ring: #55429e;
     --chart-1: oklch(0.87 0 0);
     --chart-2: oklch(0.556 0 0);
     --chart-3: oklch(0.439 0 0);
@@ -89,25 +95,28 @@
 }
 
 .dark {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --body: oklch(0.85 0.01 300);
-    --card: oklch(0.205 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.205 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: #8b78d6;
-    --primary-foreground: #ffffff;
-    --secondary: oklch(0.269 0 0);
+    --background: #131119;
+    --foreground: #f3f1f7;
+    --body: #c4bfcd;
+    --brand-soft: rgba(157, 140, 224, 0.16);
+    --section: #1a1722;
+    --glow: rgba(139, 120, 214, 0.22);
+    --card: #1e1b27;
+    --card-foreground: #f3f1f7;
+    --popover: #1e1b27;
+    --popover-foreground: #f3f1f7;
+    --primary: #9d8ce0;
+    --primary-foreground: #15131c;
+    --secondary: #2a2635;
     --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
+    --muted: #2a2635;
+    --muted-foreground: #9a94a3;
+    --accent: #2a2635;
     --accent-foreground: oklch(0.985 0 0);
     --destructive: oklch(0.704 0.191 22.216);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.556 0 0);
+    --border: rgba(255, 255, 255, 0.1);
+    --input: rgba(255, 255, 255, 0.14);
+    --ring: #9d8ce0;
     --chart-1: oklch(0.87 0 0);
     --chart-2: oklch(0.556 0 0);
     --chart-3: oklch(0.439 0 0);
@@ -149,5 +158,25 @@
   }
   @variant xl {
     padding-inline: 4.5rem;
+  }
+}
+
+/* Hero motion — organic blob morph, gentle float and an endless marquee. */
+@theme {
+  --animate-blob: blob 14s ease-in-out infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-marquee: marquee 28s linear infinite;
+
+  @keyframes blob {
+    0%, 100% { border-radius: 58% 42% 55% 45% / 48% 55% 45% 52%; }
+    33% { border-radius: 42% 58% 40% 60% / 58% 42% 58% 42%; }
+    66% { border-radius: 52% 48% 62% 38% / 40% 60% 40% 60%; }
+  }
+  @keyframes float {
+    0%, 100% { translate: 0 0; }
+    50% { translate: 0 -10px; }
+  }
+  @keyframes marquee {
+    to { transform: translateX(-50%); }
   }
 }

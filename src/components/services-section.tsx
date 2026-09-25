@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { cn } from "cn"
 
+import { MaskIcon } from "@/components/mask-icon"
 import { Button } from "@/components/ui/button"
 import arrowRightIcon from "@/assets/icons/arrow-right.svg"
 import medicalKitIcon from "@/assets/icons/medical-kit.svg"
@@ -25,7 +26,7 @@ type Service = {
   ribbon?: string
 }
 
-const defaultTag = "bg-[rgba(228,223,255,0.4)] text-primary"
+const defaultTag = "bg-brand-soft text-primary"
 
 const services: Service[] = [
   {
@@ -50,7 +51,8 @@ const services: Service[] = [
     href: "#contact",
     tag: {
       label: "Preventative",
-      className: "bg-[rgba(207,201,254,0.4)] text-[#5d5987]",
+      className:
+        "bg-[rgba(207,201,254,0.4)] text-[#5d5987] dark:bg-primary/25 dark:text-primary",
     },
   },
   {
@@ -86,7 +88,8 @@ const services: Service[] = [
     href: "#contact",
     tag: {
       label: "Same-day results",
-      className: "bg-[#fef3c7] text-[#92400e]",
+      className:
+        "bg-[#fef3c7] text-[#92400e] dark:bg-amber-500/15 dark:text-amber-300",
     },
   },
   {
@@ -113,20 +116,23 @@ function ServiceCard({ service }: { service: Service }) {
   return (
     <article
       className={cn(
-        "relative flex flex-col justify-between overflow-hidden rounded-[32px] border bg-white/85 p-[29px] backdrop-blur-md",
-        service.ribbon ? "border-primary/20" : "border-[rgba(235,231,237,0.7)]"
+        "relative flex flex-col justify-between overflow-hidden rounded-[32px] border bg-card/85 p-[29px] backdrop-blur-md",
+        service.ribbon ? "border-primary/30" : "border-border/70"
       )}
     >
       {service.ribbon && (
-        <span className="absolute top-0 right-0 rounded-bl-2xl bg-primary px-3 py-1 text-[10px] leading-[15px] font-bold tracking-[0.5px] text-white uppercase">
+        <span className="absolute top-0 right-0 rounded-bl-2xl bg-primary px-3 py-1 text-[10px] leading-[15px] font-bold tracking-[0.5px] text-primary-foreground uppercase">
           {service.ribbon}
         </span>
       )}
 
       <div className="flex flex-col gap-[7.3px] pb-6">
         <div className="flex items-center justify-between">
-          <span className="flex size-14 items-center justify-center rounded-3xl bg-[#efeafd]">
-            <img src={service.icon} alt="" className={service.iconClassName} />
+          <span className="flex size-14 items-center justify-center rounded-3xl bg-brand-soft">
+            <MaskIcon
+              src={service.icon}
+              className={cn("text-primary", service.iconClassName)}
+            />
           </span>
           {service.tag && (
             <span
@@ -152,9 +158,8 @@ function ServiceCard({ service }: { service: Service }) {
         className="group flex w-fit items-center gap-2 text-sm leading-5 font-bold text-primary"
       >
         {service.cta}
-        <img
+        <MaskIcon
           src={arrowRightIcon}
-          alt=""
           className="size-3 transition-transform group-hover:translate-x-0.5"
         />
       </a>
@@ -172,15 +177,14 @@ export function ServicesSection({ className }: { className?: string }) {
   return (
     <section
       id="services"
-      className={cn("bg-[rgba(247,242,249,0.6)] py-24 font-jakarta", className)}
+      className={cn("bg-section py-24 font-jakarta", className)}
     >
       <div className="page-container flex flex-col gap-12">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="flex max-w-[672px] flex-col items-start gap-2">
-            <span className="flex items-center gap-1.5 rounded-full border border-[rgba(201,196,209,0.3)] bg-white px-[13px] py-[5px] text-xs leading-4 font-bold tracking-[0.6px] text-primary uppercase">
-              <img
+            <span className="flex items-center gap-1.5 rounded-full border border-border/70 bg-card px-[13px] py-[5px] text-xs leading-4 font-bold tracking-[0.6px] text-primary uppercase">
+              <MaskIcon
                 src={stethoscopeBadgeIcon}
-                alt=""
                 className="size-[11.637px]"
               />
               Complete veterinary services
@@ -212,7 +216,7 @@ export function ServicesSection({ className }: { className?: string }) {
                     "h-auto rounded-full px-4 py-[9px] text-sm leading-5 font-semibold",
                     active
                       ? "shadow-[0_4px_7px_rgba(81,75,143,0.28)]"
-                      : "border-[#e5e1e8] bg-white text-body"
+                      : "bg-card text-body dark:bg-card"
                   )}
                 >
                   {item.label}
