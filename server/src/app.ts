@@ -6,6 +6,7 @@ import mongoose from "mongoose"
 
 import { env } from "./config/env"
 import { AppError } from "./lib/app-error"
+import { attachUser } from "./middleware/auth"
 import { errorHandler } from "./middleware/error-handler"
 import { createAuthRouter } from "./modules/auth/auth.routes"
 
@@ -20,6 +21,7 @@ export function createApp({
   app.use(cors({ origin: env.CLIENT_ORIGIN, credentials: true }))
   app.use(express.json({ limit: "10kb" }))
   app.use(cookieParser())
+  app.use(attachUser)
 
   app.get("/api/health", (_req, res) => {
     res.json({
