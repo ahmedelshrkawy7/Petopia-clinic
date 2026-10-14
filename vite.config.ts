@@ -9,6 +9,11 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      "@shared": path.resolve(__dirname, "./shared"),
     },
+  },
+  server: {
+    // The API (server/) runs on :4000; proxying keeps auth cookies same-origin.
+    proxy: { "/api": "http://localhost:4000" },
   },
 })

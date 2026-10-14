@@ -31,6 +31,7 @@ import {
   type BookingFormInput,
   type BookingFormValues,
 } from "@/lib/booking-schema"
+import { ApiError } from "@/services/api/http"
 import asteriskSmallIcon from "@/assets/icons/asterisk-small.svg"
 import calendarCustomIcon from "@/assets/icons/calendar-custom.svg"
 import calendarSmallIcon from "@/assets/icons/calendar-small.svg"
@@ -144,10 +145,19 @@ export function BookingSection({ onBook, className }: BookingSectionProps) {
       if (onBook) await onBook(values)
       else await new Promise((resolve) => setTimeout(resolve, 800))
       setBooked(values)
-    } catch {
+    } catch (err) {
+      // Show the API's field errors (e.g. "That time slot is no longer available").
+      const fields = err instanceof ApiError ? err.fields : undefined
+      if (fields) {
+        for (const [name, message] of Object.entries(fields)) {
+          if (name in values) form.setError(name as keyof BookingFormValues, { message })
+        }
+      }
       form.setError("root", {
         message:
-          "We couldn't send your booking. Please try again or call us directly.",
+          err instanceof ApiError && err.status >= 400 && err.status < 500
+            ? err.message
+            : "We couldn't send your booking. Please try again or call us directly.",
       })
     }
   }

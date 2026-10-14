@@ -1,4 +1,4 @@
-import { LogOutIcon, RotateCcwIcon } from "lucide-react"
+import { LogOutIcon } from "lucide-react"
 import { useNavigate } from "react-router"
 import { toast } from "sonner"
 
@@ -14,7 +14,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { resetDemoData } from "@/services"
 
 const initials = (name: string) =>
   name
@@ -66,17 +65,6 @@ export function UserMenu() {
           </DropdownMenuLabel>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        {resetDemoData && (
-          <DropdownMenuItem
-            onClick={() => {
-              resetDemoData?.()
-              toast.success("Demo data has been reset")
-            }}
-          >
-            <RotateCcwIcon />
-            Reset demo data
-          </DropdownMenuItem>
-        )}
         <DropdownMenuItem variant="destructive" onClick={handleLogout}>
           <LogOutIcon />
           Sign out
