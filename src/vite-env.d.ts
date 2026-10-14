@@ -1,8 +1,8 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  readonly VITE_DEMO_ADMIN_EMAIL?: string
-  readonly VITE_DEMO_ADMIN_PASSWORD?: string
+  /** API origin when it isn't served from the same host (dev uses the Vite /api proxy). */
+  readonly VITE_API_URL?: string
 }
 
 interface ImportMeta {

@@ -14,7 +14,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { readStorage, writeStorage } from "@/services/mock-utils"
+import { readStorage, writeStorage } from "@/lib/storage"
 
 const COLLAPSED_KEY = "petopia:sidebar-collapsed"
 
