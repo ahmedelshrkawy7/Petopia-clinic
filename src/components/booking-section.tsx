@@ -113,7 +113,7 @@ const textInput =
 
 type BookingSectionProps = {
   /** Called with validated values. Wire this to your API; defaults to a short fake delay. */
-  onBook?: (values: BookingFormValues) => Promise<void> | void
+  onBook?: (values: BookingFormValues) => Promise<unknown> | void
   className?: string
 }
 
@@ -140,9 +140,16 @@ export function BookingSection({ onBook, className }: BookingSectionProps) {
     selectedDate && !quickDays.some((day) => isSameDay(day, selectedDate))
 
   const onSubmit = async (values: BookingFormValues) => {
-    if (onBook) await onBook(values)
-    else await new Promise((resolve) => setTimeout(resolve, 800))
-    setBooked(values)
+    try {
+      if (onBook) await onBook(values)
+      else await new Promise((resolve) => setTimeout(resolve, 800))
+      setBooked(values)
+    } catch {
+      form.setError("root", {
+        message:
+          "We couldn't send your booking. Please try again or call us directly.",
+      })
+    }
   }
 
   const bookAnother = () => {
@@ -518,6 +525,15 @@ export function BookingSection({ onBook, className }: BookingSectionProps) {
                     ))}
                   </div>
                 </div>
+
+                {form.formState.errors.root && (
+                  <p
+                    role="alert"
+                    className="rounded-2xl bg-destructive/10 px-4 py-3 text-sm font-medium text-destructive"
+                  >
+                    {form.formState.errors.root.message}
+                  </p>
+                )}
 
                 {/* Submit */}
                 <div className="flex flex-col gap-4 border-t border-border/70 pt-4 sm:flex-row sm:items-center sm:justify-between">
