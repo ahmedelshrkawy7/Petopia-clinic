@@ -43,6 +43,10 @@
     --color-foreground: var(--foreground);
     --color-body: var(--body);
     --color-brand-soft: var(--brand-soft);
+    --color-sand: var(--sand);
+    --color-sand-soft: var(--sand-soft);
+    --color-sand-foreground: var(--sand-foreground);
+    --color-stone: var(--stone);
     --color-section: var(--section);
     --color-glow: var(--glow);
     --color-background: var(--background);
@@ -60,6 +64,10 @@
     --foreground: #201e27;
     --body: #4d4957;
     --brand-soft: #efeafd;
+    --sand: #d6b97c;
+    --sand-soft: #f6eedc;
+    --sand-foreground: #2b2752;
+    --stone: #cacacc;
     --section: #faf7fb;
     --glow: rgba(207, 201, 254, 0.5);
     --card: #ffffff;
@@ -99,6 +107,10 @@
     --foreground: #f3f1f7;
     --body: #c4bfcd;
     --brand-soft: rgba(157, 140, 224, 0.16);
+    --sand: #dcc28b;
+    --sand-soft: rgba(214, 185, 124, 0.12);
+    --sand-foreground: #1c1a2e;
+    --stone: rgba(255, 255, 255, 0.16);
     --section: #1a1722;
     --glow: rgba(139, 120, 214, 0.22);
     --card: #1e1b27;
