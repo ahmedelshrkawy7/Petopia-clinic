@@ -16,6 +16,7 @@ import {
   updateNotes,
   updateStatuses,
 } from "./admin-bookings.service"
+import { getStats } from "./stats.service"
 
 // Mounted behind requireRole("staff", "admin") in app.ts.
 export const adminBookingsRouter = Router()
@@ -26,6 +27,10 @@ adminBookingsRouter.get("/", async (req, res) => {
 
 adminBookingsRouter.get("/export", async (req, res) => {
   res.json(await exportBookings(parse(filtersSchema, req.query)))
+})
+
+adminBookingsRouter.get("/stats", async (_req, res) => {
+  res.json(await getStats())
 })
 
 adminBookingsRouter.patch("/status", async (req, res) => {
