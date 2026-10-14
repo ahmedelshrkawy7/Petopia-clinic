@@ -6,6 +6,8 @@ import {
 } from "@shared/booking-schema"
 import { z } from "zod"
 
+import { objectIdSchema } from "../../lib/object-id"
+
 export const BOOKING_SORTS = ["date-asc", "date-desc", "created-asc", "created-desc"] as const
 export type BookingSort = (typeof BOOKING_SORTS)[number]
 
@@ -39,3 +41,16 @@ export const listQuerySchema = filtersSchema.extend({
 
 export type Filters = z.output<typeof filtersSchema>
 export type ListQuery = z.output<typeof listQuerySchema>
+
+const idsSchema = z.array(objectIdSchema).min(1).max(500)
+
+export const statusBodySchema = z.object({
+  ids: idsSchema,
+  status: z.enum(BOOKING_STATUSES, { error: "Choose a valid status" }),
+})
+
+export const notesBodySchema = z.object({
+  notes: z.string().max(2000, { error: "Keep notes under 2000 characters" }),
+})
+
+export const idsBodySchema = z.object({ ids: idsSchema })
