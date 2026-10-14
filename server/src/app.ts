@@ -7,8 +7,13 @@ import mongoose from "mongoose"
 import { env } from "./config/env"
 import { AppError } from "./lib/app-error"
 import { errorHandler } from "./middleware/error-handler"
+import { createAuthRouter } from "./modules/auth/auth.routes"
 
-export function createApp(): Express {
+export type AppOptions = { authRateLimitMax?: number }
+
+export function createApp({
+  authRateLimitMax = env.AUTH_RATE_LIMIT_MAX,
+}: AppOptions = {}): Express {
   const app = express()
   app.set("trust proxy", 1)
   app.use(helmet())
@@ -22,6 +27,7 @@ export function createApp(): Express {
       db: mongoose.connection.readyState === 1 ? "connected" : "disconnected",
     })
   })
+  app.use("/api/auth", createAuthRouter({ rateLimitMax: authRateLimitMax }))
 
   app.use("/api", () => {
     throw new AppError(404, "NOT_FOUND", "Route not found")
