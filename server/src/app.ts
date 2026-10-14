@@ -6,8 +6,9 @@ import mongoose from "mongoose"
 
 import { env } from "./config/env"
 import { AppError } from "./lib/app-error"
-import { attachUser } from "./middleware/auth"
+import { attachUser, requireRole } from "./middleware/auth"
 import { errorHandler } from "./middleware/error-handler"
+import { adminBookingsRouter } from "./modules/admin/admin-bookings.routes"
 import { createAuthRouter } from "./modules/auth/auth.routes"
 import { bookingsRouter } from "./modules/bookings/bookings.routes"
 
@@ -32,6 +33,7 @@ export function createApp({
   })
   app.use("/api/auth", createAuthRouter({ rateLimitMax: authRateLimitMax }))
   app.use("/api/bookings", bookingsRouter)
+  app.use("/api/admin/bookings", requireRole("staff", "admin"), adminBookingsRouter)
 
   app.use("/api", () => {
     throw new AppError(404, "NOT_FOUND", "Route not found")
