@@ -9,6 +9,7 @@ import { AppError } from "./lib/app-error"
 import { attachUser } from "./middleware/auth"
 import { errorHandler } from "./middleware/error-handler"
 import { createAuthRouter } from "./modules/auth/auth.routes"
+import { bookingsRouter } from "./modules/bookings/bookings.routes"
 
 export type AppOptions = { authRateLimitMax?: number }
 
@@ -30,6 +31,7 @@ export function createApp({
     })
   })
   app.use("/api/auth", createAuthRouter({ rateLimitMax: authRateLimitMax }))
+  app.use("/api/bookings", bookingsRouter)
 
   app.use("/api", () => {
     throw new AppError(404, "NOT_FOUND", "Route not found")
