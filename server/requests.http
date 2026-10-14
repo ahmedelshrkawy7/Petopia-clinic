@@ -1,0 +1,86 @@
+@base = http://localhost:4000/api
+# Pick a future day for the booking examples
+@day = 2030-01-15
+
+### Health
+GET {{base}}/health
+
+### Availability (public)
+GET {{base}}/bookings/availability?date={{day}}&specialist=clara-vance
+
+### Book as a guest
+POST {{base}}/bookings
+Content-Type: application/json
+
+{ "petType": "dog", "service": "wellness", "specialist": "clara-vance", "date": "{{day}}",
+  "time": "10:30", "fullName": "Jane Doe", "phone": "555-0192", "petInfo": "Rex, 4" }
+
+### Same slot again → 409 SLOT_TAKEN
+POST {{base}}/bookings
+Content-Type: application/json
+
+{ "petType": "cat", "service": "dental", "specialist": "clara-vance", "date": "{{day}}",
+  "time": "10:30", "fullName": "Omar Ali", "phone": "555-0100", "petInfo": "Max, 2" }
+
+### Register an owner (sets cookies)
+POST {{base}}/auth/register
+Content-Type: application/json
+
+{ "name": "Pet Owner", "email": "owner@example.com", "password": "supersecret" }
+
+### Book as the owner
+# @name ownerBooking
+POST {{base}}/bookings
+Content-Type: application/json
+
+{ "petType": "dog", "service": "vaccines", "specialist": "any", "date": "{{day}}",
+  "time": "09:00", "fullName": "Pet Owner", "phone": "555-0111", "petInfo": "Bella, 1" }
+
+### My bookings
+GET {{base}}/bookings/mine
+
+### Cancel my booking
+PATCH {{base}}/bookings/{{ownerBooking.response.body.id}}/cancel
+
+### Log out
+POST {{base}}/auth/logout
+
+### Log in as the seeded admin (ADMIN_EMAIL / ADMIN_PASSWORD from .env)
+POST {{base}}/auth/login
+Content-Type: application/json
+
+{ "email": "admin@petopia.com", "password": "change-me", "remember": true }
+
+### Current session
+GET {{base}}/auth/session
+
+### List with filters
+# @name list
+GET {{base}}/admin/bookings?status=pending,confirmed&sort=date-asc&page=1&pageSize=10
+
+### One booking
+GET {{base}}/admin/bookings/{{list.response.body.items[0].id}}
+
+### Confirm it
+PATCH {{base}}/admin/bookings/status
+Content-Type: application/json
+
+{ "ids": ["{{list.response.body.items[0].id}}"], "status": "confirmed" }
+
+### Add notes
+PATCH {{base}}/admin/bookings/{{list.response.body.items[0].id}}/notes
+Content-Type: application/json
+
+{ "notes": "Bring vaccination card" }
+
+### Stats
+GET {{base}}/admin/bookings/stats
+
+### Export (CSV source)
+GET {{base}}/admin/bookings/export?sort=date-asc
+
+### Delete
+POST {{base}}/admin/bookings/delete
+Content-Type: application/json
+
+{ "ids": ["{{list.response.body.items[0].id}}"] }
